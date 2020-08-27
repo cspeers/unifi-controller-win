@@ -17,7 +17,7 @@ RUN 7z x C:\UniFi-installer.exe -oC:\Unifi\;
 RUN Remove-Item C:\UniFi-Installer.exe -Force
 
 VOLUME [ "C:/Unifi/data" ]
-EXPOSE 8080 8081 8443 8843 8880 3478
+EXPOSE 8080 8081 8443 8843 8880 3478 10001 6789
 
 #RUN Start-Process -FilePath java.exe -ArgumentList '-Xmx1024M','-jar','C:\Unifi\lib\ace.jar','installsvc' -NoNewWindow -Wait
 #COPY Wait-Service.ps1 /EntryPoint/

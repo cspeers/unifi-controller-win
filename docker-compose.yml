@@ -1,27 +1,25 @@
 version: '3.5'
 services:
- unifi-controller:
-   container_name: unifi.controller
-   image: cspeers/unifi:latest
-   restart: always
-   dns: 192.168.10.100
-   networks:
-    nat: {}
-   volumes:
-     - 'E:\docker\unifi:C:\unifi\data'
-   ports:
-     - '3478:3478/udp'
-     - '10001:10001/udp'
-     - '6789:6789/tcp'
-     - '8080:8080/tcp'
-     - '8880:8880/tcp'
-     - '8443:8443/tcp'
-     - '8843:8843/tcp'
-   environment:
-     - COMPOSE_CONVERT_WINDOWS_PATHS=false
-   labels:
-     - 'unifi-controller'
+  unifi-controller:
+    hostname: unifi
+    container_name: unifi-controller
+    network_mode: External
+    volumes:
+      - X:\unifi:C:\unifi\data
+    ports:
+      - '3478:3478/udp'
+      - '10001:10001/udp'
+      - '6789:6789/tcp'
+      - '8080:8080/tcp'
+      - '8880:8880/tcp'
+      - '8443:8443/tcp'
+      - '8843:8843/tcp'      
+    restart: unless-stopped
+    image: cspeers/unifi:latest
+    security_opt: 
+      - credentialspec=file://unifi.json
+    mac_address: 00:1d:3d:1d:33:33
 networks:
-  nat:
-    external: true
-    name: nat
+  default:
+    external: 
+        name: External
