@@ -13,8 +13,8 @@ services:
       - '8080:8080/tcp'
       - '8880:8880/tcp'
       - '8443:8443/tcp'
-      - '8843:8843/tcp'      
-    restart: unless-stopped
+      - '8843:8843/tcp'
+    restart: always
     image: cspeers/unifi:latest
     security_opt: 
       - credentialspec=file://unifi.json

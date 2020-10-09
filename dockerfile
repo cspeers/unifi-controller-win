@@ -17,11 +17,22 @@ RUN 7z x C:\UniFi-installer.exe -oC:\Unifi\;
 RUN Remove-Item C:\UniFi-Installer.exe -Force
 
 VOLUME [ "C:/Unifi/data" ]
-EXPOSE 8080 8081 8443 8843 8880 3478 10001 6789
+
+EXPOSE 8080/tcp 
+EXPOSE 8081/tcp
+EXPOSE 8443/tcp
+EXPOSE 8843/tcp
+EXPOSE 8880/tcp
+EXPOSE 3478/tcp
+EXPOSE 10001/tcp
+EXPOSE 6789/tcp
 
 #RUN Start-Process -FilePath java.exe -ArgumentList '-Xmx1024M','-jar','C:\Unifi\lib\ace.jar','installsvc' -NoNewWindow -Wait
 #COPY Wait-Service.ps1 /EntryPoint/
 #CMD C:\EntryPoint\Wait-Service.ps1 -ServiceName UniFi -AllowServiceRestart
 
 COPY start-unifi.ps1 /EntryPoint/
+COPY healthcheck.ps1 /EntryPoint/
 CMD C:\EntryPoint\start-unifi.ps1
+
+HEALTHCHECK --interval=60s --timeout=90s --start-period=120s --retries=3 CMD powershell -File .\EntryPoint\healthcheck.ps1
